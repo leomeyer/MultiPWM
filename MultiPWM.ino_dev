@@ -228,8 +228,6 @@ void loop() {
         Serial.print(isrLoad);
         Serial.println(F(" %"));
         #endif
-        if (load >= 75)
-          break;
       }
 
       MultiPWM.reset();
