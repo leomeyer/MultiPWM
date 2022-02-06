@@ -25,7 +25,7 @@
 	
 	MultiPWM supports nonlinearity compensation using 8-bit gamma tables with linear interpolation for higher resolutions.
 
-** Installation
+## Installation
 
 	You can install the downloaded library archive using the Arduino IDE's menu item "Sketch -> Include Library... -> Add .ZIP library...".
 	To install it manually, unzip the downloaded library archive in the Arduino libraries folder. See here for the library folder location:
@@ -36,7 +36,7 @@
 	Alternatively, you can simply add the MultiPWM.h file to a sketch folder. After opening the sketch with the IDE the .h file will
 	be opened in a separate tab and compile along with your sketch.
 
-** Usage
+## Usage
 
 	For getting started quickly, see the BareMinimum example sketch:
 
@@ -222,7 +222,7 @@
 	a "real" PWM value of `maximum()` - (1 ^ resolution). Only if the channel value is set to `maximum()` the actual maximum
 	value will be used as real PWM value.
 	
-** Error codes
+## Error codes
 
 	The following error codes are defined:
 	
@@ -235,7 +235,7 @@
 	#define MULTIPWM_INVALID_RESOLUTION -6
 ```
 
-** Accuracy
+## Accuracy
 
 	MultiPWM, being a software PWM library, is not as accurate as hardware PWM. It uses TIMER1 which has a lower priority than
 	TIMER0. Frequent interrupts or long service routines will increase the inaccuracy of MultiPWM, as will frequent
@@ -258,11 +258,11 @@
 	There is still room for optimization but as the primary use case of this library is for LEDs where frequencies are typically
 	much lower it is usable as of now.	
 
-** Reporting bugs
+## Reporting bugs
 
 	Please report bugs at the repository issues page: https://github.com/leomeyer/MultiPWM/issues
 
-** License
+## License
 
 	BSD 3-Clause License
 
