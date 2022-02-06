@@ -2,8 +2,8 @@
 // #define BARE_MINIMUM
 // #define FOUR_PINS
 // #define GAMMA_TABLE
-// #define PERFORMANCE_TEST
-#define DEBUG_SERIAL
+#define PERFORMANCE_TEST
+// #define DEBUG_SERIAL
 
 #ifdef BARE_MINIMUM
 // Example for MultiPWM: A CPU-efficient AVR Arduino software PWM library for resolutions of 8 to 16 bits on an arbitrary number of digital output pins
