@@ -102,7 +102,7 @@ of the Arduino pin to use for this channel:
 int8_t led = MultiPWM.addChannel(LED_BUILTIN);
 ```
 
-Optionally, specify a 16 bit channel value (default = 0):
+Optionally, specify a channel value (default = 0):
 
 ```
 int8_t led = MultiPWM.addChannel(LED_BUILTIN, 100);
@@ -178,9 +178,9 @@ The current channel values are preserved. To restart the PWM, call `apply()` aga
 
 6. Obtaining PWM information
 
-Resolution and prescaler values can be obtained from `getResolution() and `getPrescaler()`, respectively.
+Resolution and prescaler values can be obtained from `getResolution()` and `getPrescaler()`, respectively.
 The current number of channels can be queried using `size()`.
-Whether the PWM is operating can be queried using `isRunning().
+Whether the PWM is operating can be queried using `isRunning()`.
 The maximum value for the specified resolution is returned by `maximum()`.
 
 7. To stop the PWM and remove all channels use
@@ -217,9 +217,7 @@ You can also use the gamma table provided by MultiPWM using:
 MultiPWM.setGammaTable(MultiPWM.DefaultGamma);
 ```
 
-For higher resolutions than 8 bits the gamma values are linearly interpolated. The gamma value of 255 represents
-a "real" PWM value of `maximum()` - (1 ^ resolution). Only if the channel value is set to `maximum()` the actual maximum
-value will be used as real PWM value.
+For higher resolutions than 8 bits the gamma values are linearly interpolated.
 
 ## Error codes
 
