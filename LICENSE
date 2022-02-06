@@ -1,7 +1,7 @@
 BSD 3-Clause License
 
-Copyright (c) 2022, leomeyer
-All rights reserved.
+MultiPWM - A CPU-efficient AVR Arduino software PWM library for resolutions of 8 to 16 bits on an arbitrary number of digital output pins
+Copyright (c) 2022, Leo Meyer <leo@leomeyer.de>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
