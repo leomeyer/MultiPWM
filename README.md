@@ -28,11 +28,11 @@ MultiPWM supports nonlinearity compensation using 8-bit gamma tables with linear
 
 You can install the downloaded library archive using the Arduino IDE's menu item "Sketch -> Include Library... -> Add .ZIP library...".
 To install it manually, unzip the downloaded library archive in the Arduino libraries folder. See here for the library folder location:
-https:support.arduino.cc/hc/en-us/articles/4411202655634-Find-Arduino-IDE-files-and-folders
+[https://support.arduino.cc/hc/en-us/articles/4411202655634-Find-Arduino-IDE-files-and-folders](https://support.arduino.cc/hc/en-us/articles/4411202655634-Find-Arduino-IDE-files-and-folders)
 
 Manual installation requires an IDE restart. These methods will also allow you to open the provided MultiPWM examples from the Arduino IDE. 
 
-Alternatively, you can simply add the MultiPWM.h file to a sketch folder. After opening the sketch with the IDE the .h file will
+Alternatively, you can simply add the `MultiPWM.h` file to a sketch folder. After opening the sketch with the IDE the `.h` file will
 be opened in a separate tab and compile along with your sketch.
 
 ## Usage
@@ -40,41 +40,41 @@ be opened in a separate tab and compile along with your sketch.
 For getting started quickly, see the BareMinimum example sketch:
 
 ```
-      #include "MultiPWM.h"
-      
-      void setup() {
-        if (MultiPWM.begin() >= 0) {
-          // set builtin LED brightness to about 1%
-          MultiPWM.addChannel(LED_BUILTIN, MultiPWM.maximum() / 100);
-          MultiPWM.apply();
-        }
-      }
-      
-      void loop() {}
+#include "MultiPWM.h"
+
+void setup() {
+  if (MultiPWM.begin() >= 0) {
+    // set builtin LED brightness to about 1%
+    MultiPWM.addChannel(LED_BUILTIN, MultiPWM.maximum() / 100);
+    MultiPWM.apply();
+  }
+}
+
+void loop() {}
 ```
 
 1. Optionally, set the maximum number of pins that you want to have controlled by this library using e. g.
 
 ```
-  #define MULTIPWM_MAXCHANNELS    8
+#define MULTIPWM_MAXCHANNELS    8
 ```
-  
+
 The default number of channels is 4. More channels use more RAM for the internal control structures. You should set this number as low as possible
 if you need to keep memory usage low.
 
 Include the library using:
 
 ```
-  #include "MultiPWM.h"
+#include "MultiPWM.h"
 ```
 
-2. Initialize the MultiPWM object with an optional resolution (MultiPWM.R_8BITS to MultiPWM.R_16BITS, default: MultiPWM.R_10BITS)
-and an optional prescaler value (MultiPWM.P_8, MultiPWM.P_64, MultiPWM.P_256 or MultiPWM.P_1024, default: MultiPWM.P_64).
+2. Initialize the MultiPWM object with an optional resolution (`MultiPWM.R_8BITS` to `MultiPWM.R_16BITS`, default: `MultiPWM.R_10BITS`)
+and an optional prescaler value (`MultiPWM.P_8`, `MultiPWM.P_64`, `MultiPWM.P_256` or `MultiPWM.P_1024`, default: `MultiPWM.P_64`).
 
 ```
-  long frequency = MultiPWM.begin();
+long frequency = MultiPWM.begin();
 ```
-  
+
 The `begin()` function returns the approximate frequency of the PWM period. For large resolution and/or prescaler values the result
 may be 0 indicating less than 1 Hz. For example, on a CPU with 16 MHz clock P_1024 and R_16BITS will yield a PWM period of about 0.25 (4 s).
 The frequency of the default values (10 bits, prescaler 64) on a 16 MHz CPU is about 244 Hz which is a good value for LEDs.
@@ -82,15 +82,15 @@ You can use the function `getFrequency()` to calculate the exact frequency (this
 calculations, though):
 
 ```
-  float freq = MultiPWM.getFrequency();
+float freq = MultiPWM.getFrequency();
 ```
 
 This method returns the currently initialized frequency. To calculate a combination of resolutions and prescalers, use
 
 ```
-  float freq = MultiPWM.getFrequency(MultiPWM.R_16BITS, MultiPWM.P_1024);
+float freq = MultiPWM.getFrequency(MultiPWM.R_16BITS, MultiPWM.P_1024);
 ```
-  
+
 If the result is negative it indicates an error (see "function result codes" below).
 
 Higher PWM frequencies (i. e. lower resolutions and/or lower prescalers) will result in more CPU load. See "Accuracy" below.
@@ -99,15 +99,15 @@ Higher PWM frequencies (i. e. lower resolutions and/or lower prescalers) will re
 of the Arduino pin to use for this channel:
 
 ```
-  int8_t led = MultiPWM.addChannel(LED_BUILTIN);
+int8_t led = MultiPWM.addChannel(LED_BUILTIN);
 ```
-  
+
 Optionally, specify a 16 bit channel value (default = 0):
 
 ```
-  int8_t led = MultiPWM.addChannel(LED_BUILTIN, 100);
+int8_t led = MultiPWM.addChannel(LED_BUILTIN, 100);
 ```
-  
+
 The `addChannel()` functions returns the number of the channel (0 to 127 maximum). If a negative number is returned it indicates an error.
 Channels can be added at any time during operation, however, they cannot be removed individually.
 The `addChannel()` function configures the specified pin as a digital output (if it is valid).
@@ -115,19 +115,19 @@ Normal channel operation is being switched off at the start of each period (unle
 you can use the `addInvertedChannel()` method, e. g.:
 
 ```
-  int8_t led = MultiPWM.addInvertedChannel(LED_BUILTIN);
+int8_t led = MultiPWM.addInvertedChannel(LED_BUILTIN);
 ```
-  
+
 or
 
 ```
-  int8_t led = MultiPWM.addInvertedChannel(LED_BUILTIN, 100);
+int8_t led = MultiPWM.addInvertedChannel(LED_BUILTIN, 100);
 ```
-  
+
 or
 
 ```
-  int8_t led = MultiPWM.addChannel(LED_BUILTIN, 100, true);
+int8_t led = MultiPWM.addChannel(LED_BUILTIN, 100, true);
 ```
 
 There are also float versions of the `addChannel()` and `addInvertedChannel()` methods that allow specifying a relative value between 0 and 1.
@@ -135,45 +135,45 @@ There are also float versions of the `addChannel()` and `addInvertedChannel()` m
 4. Use the channel number returned by `addChannel()` to set the PWM value for this pin:
 
 ```
-  MultiPWM.set(led, 2047);
+MultiPWM.set(led, 2047);
 ```
-  
+
 You can use `setf()` to specify a float value between 0 and 1:
 
 ```
-  MultiPWM.setf(led, 0.5f);
+MultiPWM.setf(led, 0.5f);
 ```
-  
+
 or `setPercent()` to set a percentage between 0 and 100:
 
 ```
-  MultiPWM.setPercent(led, 45.5);
+MultiPWM.setPercent(led, 45.5);
 ```
-  
+
 The values set like this do not become active immediately. Changes must be activated using the `apply()` function:
 
 ```
-  MultiPWM.apply();
+MultiPWM.apply();
 ```
-  
+
 Some method calls can be chained, e. g.:
 
 ```
-  MultiPWM.set(0, 100).set(1, 200).set(2, 300).apply();
+MultiPWM.set(0, 100).set(1, 200).set(2, 300).apply();
 ```
 
 5. To stop the PWM, use
 
 ```
-  MultiPWM.stop();
+MultiPWM.stop();
 ```
-  
+
 This will set all outputs to 0 (off). If you want to keep the outputs in their current state, use
 
 ```
-  MultiPWM.stop(true);
+MultiPWM.stop(true);
 ```
-  
+
 The current channel values are preserved. To restart the PWM, call `apply()` again.
 
 6. Obtaining PWM information
@@ -186,15 +186,15 @@ The maximum value for the specified resolution is returned by `maximum()`.
 7. To stop the PWM and remove all channels use
 
 ```
-  MultiPWM.reset();
+MultiPWM.reset();
 ```
-  
+
 or
 
 ```
-  MultiPWM.reset(true);
+MultiPWM.reset(true);
 ```
-  
+
 to keep the outputs in their current state.
 To continue after a reset you need to initialize the PWM using `begin()` again with the same or different parameters.
 
@@ -202,21 +202,21 @@ To continue after a reset you need to initialize the PWM using `begin()` again w
 table is an array of 256 uint8_t values:
 
 ```
-  uint8_t gammaTable[256] = {v1, v2, ...};
+uint8_t gammaTable[256] = {v1, v2, ...};
 ```
-  
+
 You can set a gamma table using the `setGammaTable()` function:
 
 ```
-  MultiPWM.setGammaTable(gammaTable);
+MultiPWM.setGammaTable(gammaTable);
 ```
-  
+
 You can also use the gamma table provided by MultiPWM using:
 
 ```
-  MultiPWM.setGammaTable(MultiPWM.DefaultGamma);
+MultiPWM.setGammaTable(MultiPWM.DefaultGamma);
 ```
-  
+
 For higher resolutions than 8 bits the gamma values are linearly interpolated. The gamma value of 255 represents
 a "real" PWM value of `maximum()` - (1 ^ resolution). Only if the channel value is set to `maximum()` the actual maximum
 value will be used as real PWM value.
@@ -272,15 +272,15 @@ Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
 
 1. Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
+ list of conditions and the following disclaimer.
 
 2. Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
+ this list of conditions and the following disclaimer in the documentation
+ and/or other materials provided with the distribution.
 
 3. Neither the name of the copyright holder nor the names of its
-   contributors may be used to endorse or promote products derived from
-   this software without specific prior written permission.
+ contributors may be used to endorse or promote products derived from
+ this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
